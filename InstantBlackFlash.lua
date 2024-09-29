@@ -13,9 +13,7 @@ if not getgenv().Timing then
         end)
     end)
 
-    Speaker.Teleported:Connect(function()
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
-    end)
+    queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/StwFate/others/refs/heads/main/InstantBlackFlash.lua'))()")
     
     print("Ran Black Flash")
 end
