@@ -2,13 +2,13 @@ local Speaker = game.Players.LocalPlayer; local Alive = Speaker.Character or Spe
 
 if not getgenv().Timing then
     Alive.ChildAdded:Connect(function(i)
-        task.wait(getgenv().Timing or 0.4)
+        task.wait(getgenv().Timing or 0.35)
         if i.Name == "BlackFlashFollow" then i:InvokeServer(true) end
     end)
 
     Speaker.CharacterAdded:Connect(function(Alive2)
         Alive2.ChildAdded:Connect(function(i)
-            task.wait(getgenv().Timing or 0.4)
+            task.wait(getgenv().Timing or 0.35)
             if i.Name == "BlackFlashFollow" then i:InvokeServer(true) end
         end)
     end)
@@ -17,5 +17,3 @@ if not getgenv().Timing then
     
     print("Ran Black Flash")
 end
-
-getgenv().Timing = 0.2
