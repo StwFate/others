@@ -1,44 +1,22 @@
-local PastebinLink = "https://raw.githubusercontent.com/StwFate/others/refs/heads/main/test52.lua"
-local CodeString = "loadstring(game:HttpGet('" .. PastebinLink .. "'))()"
-local QueueOnTeleport = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
-
-if QueueOnTeleport then
-    QueueOnTeleport(CodeString)
-end
-
-if not game:IsLoaded() then 
-    game.Loaded:Wait() 
-end
+if game:IsLoaded() then else game.Loaded:Wait() end
 
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local LogService = game:GetService("LogService")
-local Lighting = game:GetService("Lighting")
-local Stats = game:GetService("Stats")
 
+local PlaceId = game.PlaceId
 local LobbyId = 7336302630
 local GameId = 7353845952
 
-local function GetRealPing()
-    local NetworkStats = Stats.Network
-    local DataPingItem = NetworkStats.ServerStatsItem:FindFirstChild("Data Ping")
-    
-    if DataPingItem then
-        return math.floor(DataPingItem:GetValue())
-    end
-    
-    return 0
-end
-
 local function TeleportToJobId(Id)
     local TeleportRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Teleport")
-    
+
     if not Id then return end
-    
+
     TeleportRemote:InvokeServer({
         JobId = Id,
         ServerName = Id,
-        PlaceId = GameId
+        PlaceId = 7353845952
     })
 end
 
@@ -61,34 +39,38 @@ end
 
 local function SendWebhook()
     local WebhookURL = "https://discord.com/api/webhooks/1488438437093834862/-s_ZeZLG0872MvN7i5pP5vhRszTkvuYnMQ3Aqs5f0mopqY27NKlSLfUlzIh8nbyOovmk"
-    local CurrentPing = GetRealPing()
-    
+    local Stats = game:GetService("Stats")
+    local NetworkStats = Stats.Network
+    local Ping = math.floor(NetworkStats.ServerStatsItem["Data Ping"]:GetValue())
+
+
     local Data = {
-        content = "@everyone",
-        embeds = {{
-            title = "Whisper Found!",
-            description = "A Rift Emission has been detected in this session.",
-            color = 8388736,
-            fields = {
+        ["content"] = "@everyone",
+        ["embeds"] = {{
+            ["title"] = "Whisper Found!",
+            ["description"] = "A Rift Emission has been detected in this session.",
+            ["color"] = 8388736, -- Purple
+            ["fields"] = {
                 {
-                    name = "Server JobId",
-                    value = "```" .. game.JobId .. "```",
-                    inline = false
+                    ["name"] = "Server JobId",
+                    ["value"] = "```" .. game.JobId .. "```",
+                    ["inline"] = false
                 },
                 {
-                    name = "Client Ping",
-                    value = "```" .. CurrentPing .. "ms```",
-                    inline = true
+                    ["name"] = "Client Ping:",
+                    ["value"] = "```" .. Ping .."ms" .. "```",
+                    ["inline"] = false
                 }
             },
-            footer = {
-                text = "Status: RiftEmission Active"
+            ["footer"] = {
+                ["text"] = "Status: RiftEmission Active"
             },
-            timestamp = DateTime.now():ToIsoDate()
+            ["timestamp"] = DateTime.now():ToIsoDate()
         }}
     }
     
-    pcall(function()
+    -- Using 'request' instead of HttpService:PostAsync to bypass executor security flags
+    local Success, Error = pcall(function()
         request({
             Url = WebhookURL,
             Method = "POST",
@@ -98,6 +80,10 @@ local function SendWebhook()
             Body = HttpService:JSONEncode(Data)
         })
     end)
+
+    if not Success then
+        warn("Webhook failed: " .. tostring(Error))
+    end
 end
 
 local function FindRandomServer()
@@ -114,7 +100,7 @@ local function FindRandomServer()
             end
         end
     end
-    
+
     if #NAServers == 0 then return nil end
     
     return NAServers[math.random(1, #NAServers)]
@@ -122,27 +108,26 @@ end
 
 if game.PlaceId == LobbyId then
     WaitForConsoleMessage("respawn client loaded")
-    
+
     while true do
         local TargetId = FindRandomServer()
-        
         if TargetId then
             TeleportToJobId(TargetId)
         end
-        
         task.wait(1)
     end
 else
     WaitForConsoleMessage("respawn client loaded")
-    
+
+    local Lighting = game:GetService("Lighting")
     local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
+
     task.wait(0.5)
-    
+
     local Status = WeatherStatus:GetAttribute("Weather")
-    
     if Status == "RiftEmission" then
         SendWebhook()
     else
-        game:GetService("TeleportService"):Teleport(LobbyId)
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Exit"):FireServer()
     end
 end
