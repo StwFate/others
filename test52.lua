@@ -65,8 +65,8 @@ local function SendWebhook()
                     ["inline"] = false
                 },
                 {
-                    ["name"] = "Client Ping:",
-                    ["value"] = "```" .. Ping .."ms" .. "```",
+                    ["name"] = "Server & Ping:",
+                    ["value"] = "```" .. "ServerLocation: " .. game:GetService("ReplicatedStorage"):WaitForChild("ServerStatus"):GetAttribute("ServerLocation") .. " | " .. Ping .."ms" .. "```",
                     ["inline"] = false
                 }
             },
