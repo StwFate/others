@@ -1,4 +1,4 @@
-local PastebinLink = "..."
+local PastebinLink = "https://raw.githubusercontent.com/StwFate/others/refs/heads/main/test52.lua"
 
 local queue_on_teleport = (syn and syn.queue_on_teleport) or queue_on_teleport (or fluxus and fluxus.queue_on_teleport)
 
