@@ -1,3 +1,11 @@
+local PastebinLink = "https://raw.githubusercontent.com/StwFate/others/refs/heads/main/test52.lua"
+local CodeString = "loadstring(game:HttpGet('" .. PastebinLink .. "'))()"
+local QueueOnTeleport = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
+
+if QueueOnTeleport then
+    QueueOnTeleport(CodeString)
+end
+
 if game:IsLoaded() then else game.Loaded:Wait() end
 
 local HttpService = game:GetService("HttpService")
@@ -122,7 +130,7 @@ else
     local Lighting = game:GetService("Lighting")
     local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
 
-    task.wait(0.5)
+    task.wait(2)
 
     local Status = WeatherStatus:GetAttribute("Weather")
     if Status == "RiftEmission" then
