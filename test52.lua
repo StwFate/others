@@ -49,7 +49,11 @@ end
 
 local function SendWebhook()
     local WebhookURL = "https://discord.com/api/webhooks/1488438437093834862/-s_ZeZLG0872MvN7i5pP5vhRszTkvuYnMQ3Aqs5f0mopqY27NKlSLfUlzIh8nbyOovmk"
-    
+    local Stats = game:GetService("Stats")
+    local NetworkStats = Stats.Network
+    local Ping = math.floor(NetworkStats.ServerStatsItem["Data Ping"]:GetValue())
+
+
     local Data = {
         ["content"] = "@everyone",
         ["embeds"] = {{
@@ -60,6 +64,11 @@ local function SendWebhook()
                 {
                     ["name"] = "Server JobId",
                     ["value"] = "```" .. game.JobId .. "```",
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Client Ping:",
+                    ["value"] = "```" .. Ping .."ms" .. "```",
                     ["inline"] = false
                 }
             },
@@ -122,7 +131,7 @@ else
 
     local Lighting = game:GetService("Lighting")
     local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
-    
+
     task.wait(0.5)
 
     local Status = WeatherStatus:GetAttribute("Weather")
