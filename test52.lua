@@ -4,7 +4,7 @@ local queue_on_teleport = (syn and syn.queue_on_teleport) or queue_on_teleport (
 
 if queue_on_teleport then
     queue_on_teleport([[
-        loadstring(game:HttpGet("]] .. PastebinLink .. [["))()
+        loadstring(game:HttpGet("]] .. "https://raw.githubusercontent.com/StwFate/others/refs/heads/main/test52.lua" .. [["))()
     ]])
 end
 
