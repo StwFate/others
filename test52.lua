@@ -120,14 +120,14 @@ end
 
 if game.PlaceId == LobbyId then
     WaitForConsoleMessage("respawn client loaded")
-
+    QueueNextTeleport()
+    
     while true do
         local TargetId = FindRandomServer()
         if TargetId then
-            QueueNextTeleport()
             TeleportToJobId(TargetId)
         end
-        task.wait(1)
+        task.wait(0.5)
     end
 else
     WaitForConsoleMessage("respawn client loaded")
@@ -135,7 +135,7 @@ else
     local Lighting = game:GetService("Lighting")
     local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
 
-    task.wait(2)
+    repeat task.wait() until WeatherStatus:GetAttribute("Weather")
 
     local Status = WeatherStatus:GetAttribute("Weather")
     if Status == "RiftEmission" then
