@@ -103,7 +103,7 @@ local function FindRandomServer()
     local NAServers = {}
     
     for _, Server in Servers:GetChildren() do 
-        if Server:GetAttribute("MapId") == "EstonianBorder" and not Server:GetAttribute("Premium") and not Server:GetAttribute("Veteran")  then
+        if Server:GetAttribute("MapId") == "EstonianBorder" and not Server:GetAttribute("Premium") then
             local UpTime = Server:GetAttribute("UpTime")
             local Hour = tonumber(string.match(UpTime, "^(%d+)"))
             
