@@ -98,8 +98,6 @@ local function SendWebhook()
     end
 end
 
-SendWebhook()
-
 local function FindRandomServer()
     local Servers = ReplicatedStorage:WaitForChild("Servers")
     local NAServers = {}
@@ -128,7 +126,7 @@ if game.PlaceId == LobbyId then
         if TargetId then
             TeleportToJobId(TargetId)
         end
-        task.wait(0.25)
+        task.wait(0.1)
     end
 else
     local Lighting = game:GetService("Lighting")
@@ -136,8 +134,9 @@ else
 
     repeat task.wait() until WeatherStatus:GetAttribute("Weather")
 
-    local Status = WeatherStatus:GetAttribute("Weather")
-    if Status == "RiftEmission" then
+    task.wait(0.1)
+
+    if WeatherStatus:GetAttribute("Weather") == "RiftEmission" then
         SendWebhook()
     else
         QueueNextTeleport()
