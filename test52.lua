@@ -98,6 +98,8 @@ local function SendWebhook()
     end
 end
 
+SendWebhook()
+
 local function FindRandomServer()
     local Servers = ReplicatedStorage:WaitForChild("Servers")
     local NAServers = {}
@@ -119,7 +121,6 @@ local function FindRandomServer()
 end
 
 if game.PlaceId == LobbyId then
-    WaitForConsoleMessage("respawn client loaded")
     QueueNextTeleport()
     
     while true do
@@ -127,11 +128,9 @@ if game.PlaceId == LobbyId then
         if TargetId then
             TeleportToJobId(TargetId)
         end
-        task.wait(0.5)
+        task.wait(0.25)
     end
 else
-    WaitForConsoleMessage("respawn client loaded")
-
     local Lighting = game:GetService("Lighting")
     local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
 
