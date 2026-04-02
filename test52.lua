@@ -24,9 +24,7 @@ local GameId = 7353845952
 
 local function TeleportToJobId(Id)
     local TeleportRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Teleport")
-    local TeleportState = game:GetService("TeleportService"):GetTeleportState()
-
-    if not TeleportState == Enum.TeleportState.Requested and not TeleportState == Enum.TeleportState.InProgress then else return end
+    
     if not Id then return end
 
     TeleportRemote:InvokeServer({
