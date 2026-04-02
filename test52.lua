@@ -134,12 +134,18 @@ else
 
     repeat task.wait() until WeatherStatus:GetAttribute("Weather")
 
-    task.wait(0.1)
-
-    if WeatherStatus:GetAttribute("Weather") == "RiftEmission" then
+    local Status = WeatherStatus:GetAttribute("Weather")
+    if Status == "RiftEmission" then
         SendWebhook()
+
+        local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+        local Exit = Remotes:WaitForChild("Exit")
+        Exit:FireServer()
     else
         QueueNextTeleport()
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Exit"):FireServer()
+        
+        local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+        local Exit = Remotes:WaitForChild("Exit")
+        Exit:FireServer()
     end
 end
