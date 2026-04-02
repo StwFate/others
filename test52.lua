@@ -143,12 +143,20 @@ else
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
-        Exit:FireServer()
+
+        while true do
+            Exit:FireServer()
+            task.wait(1)
+        end
     else
         QueueNextTeleport()
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
-        Exit:FireServer()
+
+        while true do
+            Exit:FireServer()
+            task.wait(1)
+        end
     end
 end
