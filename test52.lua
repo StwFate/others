@@ -83,7 +83,6 @@ local function SendWebhook()
         }}
     }
     
-    -- Using 'request' instead of HttpService:PostAsync to bypass executor security flags
     local Success, Error = pcall(function()
         request({
             Url = WebhookURL,
@@ -101,7 +100,7 @@ local function SendWebhook()
 end
 
 local function FindRandomServer()
-    local Servers = ReplicatedStorage:WaitForChild("Servers")
+    local Servers = ReplicatedStorage:WaitForChild("Servers", math.huge)
     local NAServers = {}
     
     for _, Server in Servers:GetChildren() do 
@@ -132,7 +131,7 @@ if game.PlaceId == LobbyId then
     end
 else
     local Lighting = game:GetService("Lighting")
-    local WeatherStatus = Lighting:WaitForChild("WeatherStatus")
+    local WeatherStatus = Lighting:WaitForChild("WeatherStatus", math.huge)
 
     repeat task.wait() until WeatherStatus:GetAttribute("Weather")
 
