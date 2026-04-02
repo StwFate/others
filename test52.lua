@@ -24,7 +24,7 @@ local GameId = 7353845952
 
 local function TeleportToJobId(Id)
     local TeleportRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Teleport")
-    
+
     if not Id then return end
 
     TeleportRemote:InvokeServer({
@@ -122,6 +122,8 @@ end
 if game.PlaceId == LobbyId then
     QueueNextTeleport()
     
+    WaitForConsoleMessage("respawn client loaded")
+
     while true do
         local TargetId = FindRandomServer()
         if TargetId then
