@@ -10,6 +10,8 @@ local function QueueNextTeleport()
     end
 end
 
+print("Script Ran")
+
 if game:IsLoaded() then else game.Loaded:Wait() end
 
 local HttpService = game:GetService("HttpService")
@@ -143,7 +145,7 @@ else
         Exit:FireServer()
     else
         QueueNextTeleport()
-        
+
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
         Exit:FireServer()
