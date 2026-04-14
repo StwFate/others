@@ -137,7 +137,7 @@ else
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    repeat task.wait() until Atmosphere.Color
+    task.wait(1)
 
     if Atmosphere.Color == Color3.fromRGB(141, 82, 128) then
         SendWebhook()
