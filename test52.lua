@@ -137,9 +137,9 @@ else
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    task.wait(1)
+    task.wait(6.5)
 
-    if Atmosphere.Color == Color3.fromRGB(141, 82, 128) then
+    if Atmosphere.Color == Color3.fromRGB(141, 82, 128) or Lighting.ColorShift_Top == Color3.fromRGB(64, 88, 194) or Atmosphere.Decay == Color3.fromRGB(255, 155, 242) then
         SendWebhook()
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
