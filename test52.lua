@@ -135,35 +135,21 @@ else
     WaitForConsoleMessage("respawn client loaded")
 
     local Lighting = game:GetService("Lighting")
-    local WeatherStatus = Lighting:WaitForChild("WeatherStatus", 4)
+    task.wait(5)
+    local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    if WeatherStatus then
-        repeat task.wait() until WeatherStatus:GetAttribute("Weather")
+    if Atmosphere.Color == Color3.fromRGB(141, 82, 128) then
+        SendWebhook()
 
-        local Status = WeatherStatus:GetAttribute("Weather")
-        if Status == "RiftEmission" then
-            SendWebhook()
+        local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+        local Exit = Remotes:WaitForChild("Exit")
 
-            local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
-            local Exit = Remotes:WaitForChild("Exit")
-
-            while true do
-                Exit:FireServer()
-                task.wait(1)
-            end
-        else
-            QueueNextTeleport()
-
-            local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
-            local Exit = Remotes:WaitForChild("Exit")
-
-            while true do
-                Exit:FireServer()
-                task.wait(1)
-            end
+        while true do
+            Exit:FireServer()
+            task.wait(1)
         end
     else
-        QueueNextTeleport()
+        QueueNextTeleport111()
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
