@@ -149,7 +149,7 @@ else
             task.wait(1)
         end
     else
-        QueueNextTeleport111()
+        QueueNextTeleport()
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
