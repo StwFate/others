@@ -135,8 +135,9 @@ else
     WaitForConsoleMessage("respawn client loaded")
 
     local Lighting = game:GetService("Lighting")
-    task.wait(5)
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
+
+    repeat task.wait() until Atmosphere.Color
 
     if Atmosphere.Color == Color3.fromRGB(141, 82, 128) then
         SendWebhook()
