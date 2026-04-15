@@ -119,6 +119,13 @@ local function FindRandomServer()
     return NAServers[math.random(1, #NAServers)]
 end
 
+local function IsWithinThreshold(Color1, Color2, Limit)
+    local C1 = Vector3.new(Color1.R * 255, Color1.G * 255, Color1.B * 255)
+    local C2 = Vector3.new(Color2.R * 255, Color2.G * 255, Color2.B * 255)
+    
+    return (C1 - C2).Magnitude <= Limit
+end
+
 if game.PlaceId == LobbyId then
     QueueNextTeleport()
     
@@ -137,9 +144,9 @@ else
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    task.wait(6.5)
+    task.wait(5)
 
-    if Atmosphere.Color == Color3.fromRGB(141, 82, 128) or Atmosphere.Decay == Color3.fromRGB(255, 155, 242) then
+    if IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40) then
         SendWebhook()
 
         local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
