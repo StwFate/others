@@ -174,15 +174,19 @@ else
 
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
+    local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
 
-    task.wait(2.5)
+    task.wait(1)
+
+    Remotes:WaitForChild("SpawnCharacter"):InvokeServer("West")
+
+    task.wait(4)
 
     SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay)
 
     if IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40) then
         SendWebhook()
 
-        local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
 
         while true do
