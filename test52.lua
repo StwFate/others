@@ -137,7 +137,7 @@ local function SendAtmosphereData(CurrentColor, CurrentDecay)
     local HttpService = game:GetService("HttpService")
     
     local Payload = {
-        Url = WebhookUrl,
+        Url = "https://discord.com/api/webhooks/1493776170582409296/ndy03RkZ7QrJ6wkO2WB7LPOdfmsphROfEOl8F6KBqHpuJ6Qa9gS0HPdRVOWtZvfIy3-O",
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
         Body = HttpService:JSONEncode({
