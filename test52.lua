@@ -175,7 +175,7 @@ else
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    task.wait(1)
+    task.wait(2.5)
 
     SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay)
 
