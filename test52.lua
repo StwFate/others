@@ -180,12 +180,15 @@ else
 
     Remotes:WaitForChild("SpawnCharacter"):InvokeServer("West")
 
-    task.wait(4)
+    task.wait(3)
 
     SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay)
 
     if IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40) then
         SendWebhook()
+        
+        Remotes:WaitForChild("ResetCharacter"):FireServer()
+
 
         local Exit = Remotes:WaitForChild("Exit")
 
@@ -196,8 +199,9 @@ else
     else
         QueueNextTeleport()
 
-        local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
         local Exit = Remotes:WaitForChild("Exit")
+
+        Remotes:WaitForChild("ResetCharacter"):FireServer()
 
         while true do
             Exit:FireServer()
