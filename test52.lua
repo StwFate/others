@@ -126,6 +126,36 @@ local function IsWithinThreshold(Color1, Color2, Limit)
     return (C1 - C2).Magnitude <= Limit
 end
 
+local function ColorToDecimal(TargetColor)
+    local R = math.floor(TargetColor.R * 255)
+    local G = math.floor(TargetColor.G * 255)
+    local B = math.floor(TargetColor.B * 255)
+    return (R * 65536) + (G * 256) + B
+end
+
+local function SendAtmosphereData(CurrentColor, CurrentDecay)
+    local HttpService = game:GetService("HttpService")
+    
+    local Payload = {
+        Url = WebhookUrl,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = HttpService:JSONEncode({
+            ["embeds"] = {{
+                ["title"] = "Current Atmosphere Status",
+                ["description"] = string.format(
+                    "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d",
+                    CurrentColor.R * 255, CurrentColor.G * 255, CurrentColor.B * 255,
+                    CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255
+                ),
+                ["color"] = ColorToDecimal(CurrentColor)
+            }}
+        })
+    }
+
+    request(Payload)
+end
+
 if game.PlaceId == LobbyId then
     QueueNextTeleport()
     
@@ -144,7 +174,9 @@ else
     local Lighting = game:GetService("Lighting")
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
 
-    task.wait(5)
+    task.wait(1)
+
+    SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay)
 
     if IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40) then
         SendWebhook()
