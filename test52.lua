@@ -146,7 +146,8 @@ local function SendAtmosphereData(CurrentColor, CurrentDecay)
                 ["description"] = string.format(
                     "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d",
                     CurrentColor.R * 255, CurrentColor.G * 255, CurrentColor.B * 255,
-                    CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255
+                    CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255,
+                    game.JobId
                 ),
                 ["color"] = ColorToDecimal(CurrentColor)
             }}
