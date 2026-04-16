@@ -144,9 +144,13 @@ local function SendAtmosphereData(CurrentColor, CurrentDecay, Rift)
             ["embeds"] = {{
                 ["title"] = "Current Atmosphere Status",
                 ["description"] = string.format(
-                    "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d\n**Job ID:** %s, %d\n**Rift:** %s",
-                    CurrentColor.R * 255, CurrentColor.G * 255, CurrentColor.B * 255,
-                    CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255,
+                    "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d\n**Job ID:** %s\n**Rift:** %s",
+                    CurrentColor.R * 255, 
+                    CurrentColor.G * 255, 
+                    CurrentColor.B * 255,
+                    CurrentDecay.R * 255, 
+                    CurrentDecay.G * 255, 
+                    CurrentDecay.B * 255,
                     game.JobId,
                     tostring(Rift)
                 ),
