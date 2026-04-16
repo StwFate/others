@@ -133,7 +133,7 @@ local function ColorToDecimal(TargetColor)
     return (R * 65536) + (G * 256) + B
 end
 
-local function SendAtmosphereData(CurrentColor, CurrentDecay)
+local function SendAtmosphereData(CurrentColor, CurrentDecay, Rift)
     local HttpService = game:GetService("HttpService")
     
     local Payload = {
@@ -144,10 +144,11 @@ local function SendAtmosphereData(CurrentColor, CurrentDecay)
             ["embeds"] = {{
                 ["title"] = "Current Atmosphere Status",
                 ["description"] = string.format(
-                    "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d\n**Job ID:** %s",
+                    "**Color:** %d, %d, %d\n**Decay:** %d, %d, %d\n**Job ID:** %s, %d\n**Rift:** %s",
                     CurrentColor.R * 255, CurrentColor.G * 255, CurrentColor.B * 255,
                     CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255,
-                    game.JobId
+                    game.JobId,
+                    Rift
                 ),
                 ["color"] = ColorToDecimal(CurrentColor)
             }}
@@ -173,14 +174,19 @@ else
     WaitForConsoleMessage("respawn client loaded")
 
     local Lighting = game:GetService("Lighting")
+    local WeatherStatus = Lighting:WaitForChild("WeatherStatus", 6)
     local Atmosphere = Lighting:WaitForChild("Atmosphere", math.huge)
     local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+    local Rift = false
+    if WeatherStatus then
+        if WeatherStatus:GetAttribute("Weather") == "RiftEmission" then
+            Rift = true
+        end
+    end
 
-    task.wait(1)
+    SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay, Rift)
 
-    SendAtmosphereData(Atmosphere.Color, Atmosphere.Decay)
-
-    if IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40) then
+    if (IsWithinThreshold(Atmosphere.Color, Color3.fromRGB(141, 82, 128), 40) and IsWithinThreshold(Atmosphere.Decay, Color3.fromRGB(255, 155, 242), 40)) or Rift then
         SendWebhook()
 
         local Exit = Remotes:WaitForChild("Exit")
