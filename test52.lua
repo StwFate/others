@@ -148,7 +148,7 @@ local function SendAtmosphereData(CurrentColor, CurrentDecay, Rift)
                     CurrentColor.R * 255, CurrentColor.G * 255, CurrentColor.B * 255,
                     CurrentDecay.R * 255, CurrentDecay.G * 255, CurrentDecay.B * 255,
                     game.JobId,
-                    Rift
+                    tostring(Rift)
                 ),
                 ["color"] = ColorToDecimal(CurrentColor)
             }}
